@@ -1,6 +1,6 @@
 if status is-interactive
     # Commands to run in interactive sessions can go here
-    #
+    
 end
 
 function ..
@@ -42,6 +42,7 @@ alias p='pwd -P'
 alias q='exit'
 alias la='ls -A'
 alias l='ls -CF'
+alias ide='bash ~/code/scripts/ide.sh'
 command -qv nvim && alias vim nvim
 
 
@@ -51,6 +52,8 @@ set -gx PATH ~/bin $PATH
 set -gx PATH ~/.local/bin $PATH
 set -gx PATH /.emacs.d/bin $PATH
 
+# Dynamic ruby gem paths
+set -U fish_user_paths (ruby -e 'print Gem.user_dir')/bin $fish_user_paths
 
 # This config an alias for my git bare repo dotfiles.
 alias config='/opt/homebrew/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
@@ -61,3 +64,4 @@ eval "$(frum init)"
 export PATH="$HOME/.emacs.d/bin:$PATH"
 export BUN_INSTALL="/Users/ptyc/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
