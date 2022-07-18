@@ -50,7 +50,7 @@ set -gx PATH bin $PATH
 set -gx PATH ~/bin $PATH
 set -gx PATH ~/.local/bin $PATH
 set -gx PATH /.emacs.d/bin $PATH
-set -gx PATH BUN_INSTALL/bin $PATH
+
 
 # This config an alias for my git bare repo dotfiles.
 alias config='/opt/homebrew/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
@@ -58,3 +58,6 @@ alias config='/opt/homebrew/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(frum init)"
 
+export PATH="$HOME/.emacs.d/bin:$PATH"
+export BUN_INSTALL="/Users/ptyc/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
