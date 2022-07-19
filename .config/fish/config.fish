@@ -30,8 +30,6 @@ set -g theme_display_user yes
 set -g theme_hide_hostname no
 set -g theme_hostname always
 
-# Aliases
-
 
 # shortcuts
 alias c='clear'
@@ -45,12 +43,15 @@ alias l='ls -CF'
 alias ide='bash ~/code/scripts/ide.sh'
 command -qv nvim && alias vim nvim
 
-
+# alias
 set -gx EDITOR nvim
 set -gx PATH bin $PATH
 set -gx PATH ~/bin $PATH
 set -gx PATH ~/.local/bin $PATH
 set -gx PATH /.emacs.d/bin $PATH
+
+# NodeJS
+set -gx PATH node_modules/.bin $PATH
 
 # Dynamic ruby gem paths
 set -U fish_user_paths (ruby -e 'print Gem.user_dir')/bin $fish_user_paths
