@@ -3,9 +3,10 @@
 
 # fish files
 fish_variables
-*.tmp
+**.tmp
 fish_plugins
 
 # folders
 env/
 karabiner/
+iterm2/
