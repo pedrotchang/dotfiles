@@ -36,6 +36,8 @@ alias q='exit'
 alias la='ls -A'
 alias l='ls -CF'
 
+alias vim='nvim'
+
 # This config an alias for my git bare repo dotfiles.
 alias config='/opt/homebrew/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 
@@ -47,12 +49,12 @@ export PATH="$HOME/.emacs.d/bin:$PATH"
 export BUN_INSTALL="/Users/ptyc/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-export EDITOR=vim
-export HISTCONTROL=ignoreboth
-export TERM=xterm-256color
-export VISUAL=vim
-export MYNAME
-export LESS='-M'
-export CLICOLOR=1
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-export PATH
+# export EDITOR=vim
+# export HISTCONTROL=ignoreboth
+# export TERM=xterm-256color
+# export VISUAL=vim
+# export MYNAME
+# export LESS='-M'
+# export CLICOLOR=1
+# export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+# export PATH
