@@ -1,0 +1,11 @@
+# macos files
+.DS_STORE
+
+# fish files
+fish_variables
+*.tmp
+fish_plugins
+
+# folders
+env/
+karabiner/
