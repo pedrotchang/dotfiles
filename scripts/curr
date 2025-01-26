@@ -1,0 +1,11 @@
+#!/bin/bash
+# From https://github.com/mischavandenburg/dotfiles/blob/17faf90aca62fdf6e4494fe2c09c006aaddd69df/scripts/curr#L8
+
+cluster=$(kubectl config current-context)
+namespace=$(
+  kubectl config view --minify -o jsonpath='{..namespace}'
+  echo
+)
+
+echo "Current cluster:   $cluster"
+echo "Current namespace: $namespace"

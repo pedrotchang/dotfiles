@@ -1,0 +1,109 @@
+#!/bin/bash
+# ~~~~~~~~~~~~~~~ Script was taken from mischavandenburg/dotfiles/setup ~~~~~~~~~~~~~~~~~~~~~~~~
+
+DOTFILES_DIR="$HOME/Repos/github.com/pedrotchang/dotfiles"
+XDG_CONFIG_HOME="$HOME/.config"
+
+create_directories() {
+  local directories=("$@")
+  for dir in "${directories[@]}"; do
+    mkdir -p "$dir"
+  done
+}
+
+create_symlinks() {
+  local items=("$@")
+  for item in "${items[@]}"; do
+    IFS=':' read -r source target <<<"$item"
+    if [ -L "$target" ]; then
+      echo "Removing existing symlink $target"
+      unlink "$target"
+    elif [ -d "$target" ]; then
+      echo "Warning: $target is a directory. Skipping..."
+      continue
+    elif [ -e "$target" ]; then
+      echo "Warning: $target already exists. Skipping..."
+      continue
+    fi
+    ln -s "$DOTFILES_DIR/$source" "$target"
+    echo "Created symlink for $source"
+  done
+}
+
+common_directories=(
+  "$XDG_CONFIG_HOME/aerospace"
+  "$XDG_CONFIG_HOME/eza"
+  "$XDG_CONFIG_HOME/ghostty"
+  "$XDG_CONFIG_HOME/starship"
+  "$XDG_CONFIG_HOME/k9s"
+)
+
+common_items=(
+  "aerospace.toml:$XDG_CONFIG_HOME/aerospace/aerospace.toml"
+  "eza/theme.yml:$XDG_CONFIG_HOME/eza/eza.yml"
+  "k9s/skin.yml:$XDG_CONFIG_HOME/k9s/skin.yml"
+  "nvim:$XDG_CONFIG_HOME/nvim"
+  ".tmux.conf:$HOME/.tmux.conf"
+  ".zprofile:$HOME/.zprofile"
+  ".zshrc:$HOME/.zshrc"
+)
+
+create_directories "${common_directories[@]}"
+create_symlinks "${common_items[@]}"
+
+
+if [[ "$OSTYPE" == darwin* ]]; then
+  macos_directories=(
+    "$HOME/.config/karabiner"
+  )
+  macos_items=(
+    "karabiner:$HOME/.config/karabiner'
+  )
+  create_directories "${macos_directories[@]}"
+  create_symlinks "${macos_items[@]}"
+fi
+
+# Packages
+
+# install brew
+# /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# get the font out of the way first, it's the most annoying
+
+# install for Mac using brew.
+# brew install --cask font-iosevka-nerd-font
+# brew install --cask font-ubuntu-mono-nerd-font
+
+# For ubuntu:
+# mkdir -p $HOME/.local/share/fonts
+# cp $PWD/fonts/UbuntuMono* $HOME/.local/share/fonts
+
+# brew packages Mac
+# brew install --cask alacritty
+# amethyst fzf nvim exa hugo bash-completion@2 newsboat kubectl starship
+
+# ubuntu packages apt
+# sudo apt install ripgrep gh
+
+# ubuntu apt neovim setup
+# sudo apt install gcc g++ unzip
+
+# ubuntu brew for vim and neovim setup
+# sudo apt install fd fzf kubectl kubectx derailed/k9s/k9s starship
+
+# ubuntu brew for neovim setup
+# brew install neovim go lazygit
+
+# ubuntu specific notes
+# create symbolic link to neovim from vim when not using neovim on
+# Ubuntu systems, because I use the v alias everywhere.
+# sudo ln -sf /usr/bin/vim /usr/bin/nvim
+
+# Arch Linux
+
+# pacman packages:
+# sudo pacman -Syu zsh zsh-completions ttf-ubuntu-mono-nerd fzf npm unzip tmux ripgrep fd
+
+# set up prompt
+# mkdir -p "$HOME/.zsh"
+# git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
