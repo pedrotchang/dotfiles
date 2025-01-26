@@ -57,7 +57,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
     "$HOME/.config/karabiner"
   )
   macos_items=(
-    "karabiner:$HOME/.config/karabiner'
+    "karabiner:$HOME/.config/karabiner"
   )
   create_directories "${macos_directories[@]}"
   create_symlinks "${macos_items[@]}"
