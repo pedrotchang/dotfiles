@@ -41,7 +41,7 @@ common_directories=(
 common_items=(
   "aerospace.toml:$XDG_CONFIG_HOME/aerospace/aerospace.toml"
   "eza/theme.yml:$XDG_CONFIG_HOME/eza/eza.yml"
-  "config:$XDG_CONFIG_HOME/ghostty/config"
+  "config:$XDG_CONFIG_HOME/ghostty/config.toml"
   "k9s/skin.yml:$XDG_CONFIG_HOME/k9s/skin.yml"
   "nvim:$XDG_CONFIG_HOME/nvim"
   ".tmux.conf:$HOME/.tmux.conf"
@@ -53,14 +53,22 @@ create_directories "${common_directories[@]}"
 create_symlinks "${common_items[@]}"
 
 
+# if [[ "$OSTYPE" == darwin* ]]; then
+#   # macos_directories=(
+#   #   "karabiner:$HOME/.config/karabiner"
+#   # )
+#   macos_items=(
+#     "karabiner:$HOME/.config/karabiner"
+#   )
+#   # create_directories "${macos_directories[@]}"
+#   create_symlinks "${macos_items[@]}"
+# fi
+
+
 if [[ "$OSTYPE" == darwin* ]]; then
-  macos_directories=(
-    "$HOME/.config/karabiner"
-  )
   macos_items=(
     "karabiner:$HOME/.config/karabiner"
   )
-  create_directories "${macos_directories[@]}"
   create_symlinks "${macos_items[@]}"
 fi
 
