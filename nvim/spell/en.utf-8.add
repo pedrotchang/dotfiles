@@ -70,3 +70,6 @@ Kubeconfig
 markdownlint
 yaml
 Devpods
+devcontainer
+Devpod
+DevPod

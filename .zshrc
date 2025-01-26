@@ -46,6 +46,7 @@ path=(
     #$HOME/.krew/bin
     $HOME/.rd/bin                   # Rancher Desktop
     /root/.local/bin                # Dev Container Specifics
+    /home/vscode/.local/bin         # Dev Container Specifics
 )
 
 # Remove duplicate entries and non-existent directories
@@ -56,15 +57,32 @@ export PATH
 
 # Source asdf
 . "$HOME/.asdf/asdf.sh"
-    
-# Source Rust
-. "$HOME/.cargo/"
-. "$HOME/.cargo/env"
 
+# ~~~~~~~~~~~~~~~ Dev Container Specifics ~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+if [ -d "/home/linuxbrew/.linuxbrew" ]; then
+     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+# # ~~~~~~~~~~~~~~~ Prompt ~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# eval "$(starship init zsh)"
 
 # ~~~~~~~~~~~~~~~ Prompt ~~~~~~~~~~~~~~~~~~~~~~~~
 
-eval "$(starship init zsh)"
+
+PURE_GIT_PULL=0
+
+
+if [[ "$OSTYPE" == darwin* ]]; then
+  fpath+=("$(brew --prefix)/share/zsh/site-functions")
+else
+  fpath+=($HOME/.zsh/pure)
+fi
+
+autoload -U promptinit; promptinit
+prompt pure
 
 # ~~~~~~~~~~~~~~~ Aliases ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -102,10 +120,10 @@ alias k='kubectl'
 alias kgp='kubectl get pods'
 alias kc='kubectx'
 alias kn='kubens'
-autoload -U +X compinit && compinit
-source <(kubectl completion zsh)
+# autoload -U +X compinit && compinit
 # source <(kubectl completion zsh)
-#complete -o default -F __start_kubectl k
+# source <(kubectl completion zsh)
+# complete -o default -F __start_kubectl k
 
 alias kcs='kubectl config use-context admin@homelab-staging'
 alias kcp='kubectl config use-context admin@homelab-production'
@@ -114,15 +132,38 @@ alias kcp='kubectl config use-context admin@homelab-production'
 alias in="cd /Users/seyza/secondbrain/0-inbox/"
 alias cdsb="cd /Users/seyza/secondbrain/"
 
+# ~~~~~~~~~~~~~~~ Completion ~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+fpath+=~/.zfunc
+
 if type brew &>/dev/null; then
-    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-    autoload -Uz compinit
-    compinit
+    FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
 fi
 
+autoload -Uz compinit
+compinit -u
+
+zstyle ':completion:*' menu select
+
+
+# Example to install completion:
+# talosctl completion zsh > ~/.zfunc/_talosctl
+
+
+# ~~~~~~~~~~~~~~~ Sourcing ~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+source "$HOME/.privaterc"
+source <(fzf --zsh)
+
+eval "$(direnv hook zsh)"
+
+# ~~~~~~~~~~~~~~~ Misc ~~~~~~~~~~~~~~~~~~~~~~~~
+
+fpath+=~/.zfunc; autoload -Uz compinit; compinit
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/seyza/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
