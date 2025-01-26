@@ -35,14 +35,15 @@ export SECONDBRAIN="$HOME/secondbrain"
 setopt extended_glob null_glob
 
 path=(
-    /opt/homebrew/opt/curl/bin      # Homebrew curl
     $path                           # Keep existing PATH entries
-    /opt/local/bin
     $HOME/bin
     $HOME/.local/bin
     $HOME/.cargo
     $HOME/.cargo/env
+    $HOME/.asdf/asdf.sh
     $SCRIPTS
+    /opt/local/bin
+    /opt/homebrew/opt/curl/bin      # Homebrew curl
     #$HOME/.krew/bin
     $HOME/.rd/bin                   # Rancher Desktop
     /root/.local/bin                # Dev Container Specifics
@@ -54,9 +55,6 @@ typeset -U path
 path=($^path(N-/))
 
 export PATH
-
-# Source asdf
-. "$HOME/.asdf/asdf.sh"
 
 # ~~~~~~~~~~~~~~~ Dev Container Specifics ~~~~~~~~~~~~~~~~~~~~~~~~
 
