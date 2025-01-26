@@ -71,24 +71,24 @@ eval "$(starship init zsh)"
 alias v=nvim
 alias c="clear"
 alias hb='history | fzf'
+alias t='tmux'
 
 # cd
 alias ..="cd .."
 
 # repos
-alias gr="cd /Users/seyza/Repos/github.com/pedrotchang/"
-
-#etc
-alias icloud="cd \$ICLOUD"
+alias scripts='cd $SCRIPTS'
+alias lab='cd $LAB'
+alias dot='cd $GHREPOS/dotfiles/'
+alias gr='cd $GHREPOS'
+alias mvdot='cd $REPOS/github.com/mischavandenburg/dotfiles'
 
 #ls
 alias ls='ls --color=auto'
 alias ll='ls -la'
 alias la='ls -A'
 alias lla='ll -A'
-
-alias lsda='lsd -all'
-alias lsdt='lsd --tree'
+# alias la='exa -laghm@ --all --icons --git --color=always'
 
 #git
 alias g='git'
