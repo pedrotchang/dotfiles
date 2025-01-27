@@ -63,10 +63,6 @@ if [ -d "/home/linuxbrew/.linuxbrew" ]; then
      eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
-# # ~~~~~~~~~~~~~~~ Prompt ~~~~~~~~~~~~~~~~~~~~~~~~
-#
-# eval "$(starship init zsh)"
-
 # ~~~~~~~~~~~~~~~ Prompt ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -152,10 +148,10 @@ zstyle ':completion:*' menu select
 # ~~~~~~~~~~~~~~~ Sourcing ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-source "$HOME/.privaterc"
+# source "$HOME/.privaterc"
 source <(fzf --zsh)
 
-eval "$(direnv hook zsh)"
+#eval "$(direnv hook zsh)"
 
 # ~~~~~~~~~~~~~~~ Misc ~~~~~~~~~~~~~~~~~~~~~~~~
 
