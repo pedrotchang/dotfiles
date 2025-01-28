@@ -8,6 +8,23 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.conceallevel = 1
 
+-- Add common markdown extensions
+vim.opt.suffixesadd:append('.md')
+vim.opt.suffixesadd:append('.markdown')
+vim.opt.suffixesadd:append('.mdown')
+vim.opt.suffixesadd:append('.mdx')
+
+-- Include subdirectories in path for file searching
+vim.opt.path:append('**')
+
+-- Configure includeexpr to handle markdown-style links [[file]]
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    -- Transform [[filename]] to filename for gf command
+    vim.opt_local.includeexpr = "substitute(v:fname, '\\[\\[\\(.\\{-}\\)\\]\\]', '\\1', '')"
+  end
+})
 
 -- Source Current Files
 vim.keymap.set("n", "<space><space>x", "<cmd>source %<CR>")
