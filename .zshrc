@@ -59,6 +59,7 @@ path=(
     $HOME/.local/bin
     $HOME/.cargo
     $HOME/.cargo/env
+    $HOME/.asdf
     $HOME/.asdf/asdf.sh
     $SCRIPTS
     #$HOME/.krew/bin
