@@ -34,6 +34,25 @@ export SECONDBRAIN="$HOME/secondbrain"
 
 setopt extended_glob null_glob
 
+function get_os_paths() {
+    case "$OSTYPE" in
+        linux-gnu*)
+            if [[ -f /etc/debian_version ]]; then
+                # Debian/Ubuntu specific paths
+                echo "/opt/nvim-linux64/bin"  # Added Neovim path
+                # Add more Debian-specific paths as needed
+            fi
+            ;;
+        darwin*)
+            # macOS specific paths
+            echo "/opt/homebrew/bin"
+            echo "/opt/homebrew/sbin"
+            echo /opt/local/bin
+            echo /opt/homebrew/opt/curl/bin      # Homebrew curl
+            ;;
+    esac
+}
+
 path=(
     $path                           # Keep existing PATH entries
     $HOME/bin
@@ -42,8 +61,6 @@ path=(
     $HOME/.cargo/env
     $HOME/.asdf/asdf.sh
     $SCRIPTS
-    /opt/local/bin
-    /opt/homebrew/opt/curl/bin      # Homebrew curl
     #$HOME/.krew/bin
     $HOME/.rd/bin                   # Rancher Desktop
     /root/.local/bin                # Dev Container Specifics
@@ -55,6 +72,8 @@ typeset -U path
 path=($^path(N-/))
 
 export PATH
+
+
 
 # ~~~~~~~~~~~~~~~ Dev Container Specifics ~~~~~~~~~~~~~~~~~~~~~~~~
 
