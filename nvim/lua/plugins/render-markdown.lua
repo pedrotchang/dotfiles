@@ -1,6 +1,6 @@
 return {
   {
-    "wallpants/render-markdown.nvim",
+    "MeanderingProgrammer/render-markdown.nvim",
     opts = {
       heading = {
         position = "inline",
