@@ -21,7 +21,7 @@ export LAB="$GHREPOS/lab"
 export SCRIPTS="$DOTFILES/scripts"
 export ICLOUD="$HOME/icloud"
 export SECONDBRAIN="$HOME/secondbrain"
-export KUBECONFIG=$(find $HOME/.kube/config -type f | tr '\n' ':')
+# export KUBECONFIG=$(find $HOME/.kube/config -type f | tr '\n' ':') CLUSTER_NAME=$(basename $(find $HOME/.kube/config -type f) | sed 's/\.yml$\|\.yaml$//')
 
 # Go related. In general all executables and scripts go in .local/bin
 
@@ -64,7 +64,7 @@ path=(
     $HOME/.cargo/env
     $HOME/.asdf
     $SCRIPTS
-    #$HOME/.krew/bin
+    $HOME/.krew/bin
     $HOME/.rd/bin                   # Rancher Desktop
     /root/.local/bin                # Dev Container Specifics
     /home/vscode/.local/bin         # Dev Container Specifics
@@ -113,8 +113,11 @@ alias scripts='cd $SCRIPTS'
 alias lab='cd $LAB'
 alias dot='cd $GHREPOS/dotfiles/'
 alias home='cd $GHREPOS/homelab/'
+alias mvhome='cd $REPOS/github.com/mischavandenburg/homelab'
 alias gr='cd $GHREPOS'
 alias mvdot='cd $REPOS/github.com/mischavandenburg/dotfiles'
+alias tach='cd $GHREPOS/homelab/clusters/tachtit/'
+alias data='cd $GHREPOS/homelab/clusters/data/'
 
 #ls
 alias ls='ls --color=auto'
