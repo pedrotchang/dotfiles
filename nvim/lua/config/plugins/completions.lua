@@ -14,8 +14,8 @@ return {
       },
 
       signature = { enabled = true },
-      sources = {
-        cmdline = { enabled = false }
+      cmdline = {
+        sources = { enabled = false }
       }
     },
   },
