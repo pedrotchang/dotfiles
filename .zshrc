@@ -118,6 +118,7 @@ alias gr='cd $GHREPOS'
 alias mvdot='cd $REPOS/github.com/mischavandenburg/dotfiles'
 alias tach='cd $GHREPOS/homelab/clusters/tachtit/'
 alias data='cd $GHREPOS/homelab/clusters/data/'
+alias blog='cd $GHREPOS/blog/'
 
 #ls
 alias ls='ls --color=auto'
