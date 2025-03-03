@@ -1,5 +1,6 @@
 [tools]
 
+neovim = "latest"
 ripgrep = "latest"
 lsd = "latest"
 bat = "latest"
