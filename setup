@@ -7,7 +7,7 @@ if command -v zsh >/dev/null; then
 fi
 
 if command -v chezmoi >/dev/null; then
-    sh -c "$(curl fsLS get.chezmoi.io)" -- apply --source $PWD
+    sh -c "$(curl -fsLS get.chezmoi.io)" -- apply --source $PWD
 fi
 
 exit 0

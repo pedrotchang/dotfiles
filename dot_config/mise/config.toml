@@ -10,5 +10,8 @@ starship = "latest"
 node = "latest"
 chezmoi = "latest"
 ruff = "latest"
+go = "latest"
+python = "latest"
+ruby = "latest"
 
 "ubi:fluxcd/flux2" = { version = "latest", exe = "flux" }
