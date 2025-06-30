@@ -1,6 +1,6 @@
 [tools]
 
-neovim = "latest"
+#neovim = "latest"
 ripgrep = "latest"
 lsd = "latest"
 bat = "latest"
@@ -13,5 +13,9 @@ ruff = "latest"
 go = "latest"
 python = "latest"
 ruby = "latest"
+lazygit = "latest"
+usage = "latest"
 
 "ubi:fluxcd/flux2" = { version = "latest", exe = "flux" }
+lua-language-server = "latest"
+golangci-lint = "latest"

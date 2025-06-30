@@ -8,7 +8,7 @@ local function create_and_open_sb_note()
 
   if title then
     -- Use the full path to sb
-    local cmd = string.format('/Users/seyza/.asdf/shims/sb new --vim "%s"', title)
+    local cmd = string.format('sb new --vim "%s"', title)
     local output = vim.fn.system(cmd)
 
     -- Rest of your function remains the same
