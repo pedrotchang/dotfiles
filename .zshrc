@@ -16,8 +16,17 @@ HISTFILE="$HOME/.zsh_history"
 HISTSIZE=80000
 SAVEHIST=50000
 
+# Add Homebrew zsh completions
+if type brew &>/dev/null; then
+  FPATH=/opt/homebrew/share/zsh/site-functions:$FPATH
+fi
+
 # enable zsh completion
 autoload -Uz compinit && compinit
+
+# Enhance pass completion for nested paths
+zstyle ':completion:*:*:pass:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' menu select
 
 # enable zsh vi-mode
 bindkey -v
@@ -90,6 +99,13 @@ fi
 
 if command -v lazygit > /dev/null ; then
   alias lg='lazygit'
+fi
+
+# kubectl
+if command -v minikube > /dev/null ; then
+  alias mk='minikube kubectl --'
+  alias kgp='kubectl get pods'
+  alias mkd='minikube dashboard'
 fi
 
 # kubectl
@@ -167,3 +183,12 @@ fi
 if [[ -d .zsh/zsh-syntax-highlighting ]] ; then
   source .zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/seyza/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/seyza/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
