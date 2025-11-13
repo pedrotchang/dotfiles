@@ -184,6 +184,11 @@ if [[ -d .zsh/zsh-syntax-highlighting ]] ; then
   source .zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
+alias awsq="aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId,PublicIpAddress,State.Name,KeyName]' --output table"
+
+alias mvcv="cp /Users/seyza/Repos/github.com/pedrotchang/maincv/rendercv_output/pedro_tae_young_chang_cv.pdf /Users/seyza/Repos/github.com/pedrotchang/blog/static"
+
+
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/seyza/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
