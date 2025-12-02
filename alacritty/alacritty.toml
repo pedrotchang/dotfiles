@@ -10,15 +10,15 @@ opacity = 1.0
 size = 12.0
 
 [font.normal]
-family = "UbuntuMono Nerd Font"
+family = "UbuntuMono Nerd Font Mono"
 style = "Regular"
 
 [font.bold]
-family = "UbuntuMono Nerd Font"
+family = "UbuntuMono Nerd Font Mono"
 style = "Bold"
 
 [font.italic]
-family = "UbuntuMono Nerd Font"
+family = "UbuntuMono Nerd Font Mono"
 style = "Italic"
 
 # Gruvbox Dark theme
