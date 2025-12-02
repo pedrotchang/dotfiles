@@ -131,16 +131,27 @@ fi
 if [[ "$PLATFORM" == "wsl" ]]; then
   echo "Setting up WSL2-specific configurations..."
 
+  # Detect Windows username
+  WIN_USER=$(cmd.exe /c "echo %USERNAME%" 2>/dev/null | tr -d '\r')
+
   wsl_directories=(
     "$XDG_CONFIG_HOME/alacritty"
   )
 
-  wsl_items=(
-    "alacritty/alacritty.toml:$XDG_CONFIG_HOME/alacritty/alacritty.toml"
-  )
-
   create_directories "${wsl_directories[@]}"
-  create_symlinks "${wsl_items[@]}"
+
+  # Symlink Alacritty config from Windows AppData
+  if [[ -n "$WIN_USER" ]]; then
+    WIN_ALACRITTY="/mnt/c/Users/$WIN_USER/AppData/Roaming/alacritty/alacritty.toml"
+    if [[ -f "$WIN_ALACRITTY" ]]; then
+      ln -sf "$WIN_ALACRITTY" "$XDG_CONFIG_HOME/alacritty/alacritty.toml"
+      echo "Created symlink for Alacritty config from Windows"
+    else
+      echo "Warning: Windows Alacritty config not found at $WIN_ALACRITTY"
+    fi
+  else
+    echo "Warning: Could not detect Windows username"
+  fi
 fi
 
 echo "Setup complete!"

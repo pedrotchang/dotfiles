@@ -17,9 +17,11 @@ Platform detection: macOS (`darwin`), WSL2 (checks `/proc/version` for "microsof
 ### Common (all platforms)
 - Neovim → `~/.config/nvim`
 - k9s → `~/.config/k9s/skin.yml`
-- eza → `~/.config/eza/eza.yml`
+- eza → `~/.config/eza/eza.yml` (from `eza/theme.yml`)
 - tmux → `~/.tmux.conf`
 - zsh → `~/.zshrc`, `~/.zprofile`
+
+Starship prompt is auto-installed if missing.
 
 ### macOS only
 - Aerospace → `~/.config/aerospace/aerospace.toml`
@@ -38,17 +40,21 @@ Platform detection: macOS (`darwin`), WSL2 (checks `/proc/version` for "microsof
 
 - Uses lazy.nvim as plugin manager (bootstrapped in `nvim/lua/config/lazy.lua`)
 - Leader key: `<Space>`, Local leader: `\`
-- Colorscheme: gruvbox
+- Colorscheme: everforest (hard background)
 - Plugins defined in `nvim/lua/config/plugins/*.lua`
-- Custom zettelkasten module in `nvim/lua/zettelkasten/`
+- Custom zettelkasten module in `nvim/lua/zettelkasten/` for secondbrain note-taking
 
-Key plugins: telescope, harpoon, oil, treesitter, LSP (via lsp.lua), mini.nvim, gitsigns
+Key plugins: telescope (with multigrep), harpoon, oil, treesitter, LSP, mini.nvim, gitsigns
 
 Notable keybindings:
 - `-` opens Oil file browser
 - `<Space><Space>x` sources current file
+- `<Space>x` executes current line as Lua
 - `<Space>to` opens terminal split
+- `<Space>fd` find files, `<Space>fh` help tags, `<Space>en` edit nvim config
 - `<leader>lg` opens lazygit
+- `<leader>sb` creates zettelkasten note from `[[title]]` under cursor
+- `<leader>zo` opens zettelkasten link under cursor
 
 ### Shell Environment
 
@@ -61,6 +67,10 @@ Zsh with vi-mode, starship prompt, fzf integration. Key aliases:
 - `dot` → cd to dotfiles
 
 Uses mise for runtime version management.
+
+### Tmux
+
+Vi mode for copy, mouse enabled, status bar shows `pomo` timer. Reload config with `prefix + r`.
 
 ### Window Management (macOS)
 
