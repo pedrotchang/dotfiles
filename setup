@@ -1,8 +1,27 @@
 #!/bin/bash
-# ~~~~~~~~~~~~~~~ Script was taken from mischavandenburg/dotfiles/setup ~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~ Dotfiles Setup Script ~~~~~~~~~~~~~~~~~~~~~~~~
 
 DOTFILES_DIR="$HOME/Repos/github.com/pedrotchang/dotfiles"
 XDG_CONFIG_HOME="$HOME/.config"
+
+# ~~~~~~~~~~~~~~~ Platform Detection ~~~~~~~~~~~~~~~~~~~~~~~~
+
+detect_platform() {
+  if [[ "$OSTYPE" == darwin* ]]; then
+    echo "macos"
+  elif [[ -f /proc/version ]] && grep -qi "microsoft\|wsl" /proc/version; then
+    echo "wsl"
+  elif [[ "$OSTYPE" == linux* ]]; then
+    echo "linux"
+  else
+    echo "unknown"
+  fi
+}
+
+PLATFORM=$(detect_platform)
+echo "Detected platform: $PLATFORM"
+
+# ~~~~~~~~~~~~~~~ Helper Functions ~~~~~~~~~~~~~~~~~~~~~~~~
 
 create_directories() {
   local directories=("$@")
@@ -30,18 +49,15 @@ create_symlinks() {
   done
 }
 
+# ~~~~~~~~~~~~~~~ Common Configuration (All Platforms) ~~~~~~~~~~~~~~~~~~~~~~~~
+
 common_directories=(
-  "$XDG_CONFIG_HOME/aerospace"
   "$XDG_CONFIG_HOME/eza"
-  "$XDG_CONFIG_HOME/ghostty"
-  "$XDG_CONFIG_HOME/starship"
   "$XDG_CONFIG_HOME/k9s"
 )
 
 common_items=(
-  "aerospace.toml:$XDG_CONFIG_HOME/aerospace/aerospace.toml"
   "eza/theme.yml:$XDG_CONFIG_HOME/eza/eza.yml"
-  "config:$XDG_CONFIG_HOME/ghostty/config"
   "k9s/skin.yml:$XDG_CONFIG_HOME/k9s/skin.yml"
   "nvim:$XDG_CONFIG_HOME/nvim"
   ".tmux.conf:$HOME/.tmux.conf"
@@ -49,70 +65,62 @@ common_items=(
   ".zshrc:$HOME/.zshrc"
 )
 
+echo "Setting up common configurations..."
 create_directories "${common_directories[@]}"
 create_symlinks "${common_items[@]}"
 
+# ~~~~~~~~~~~~~~~ macOS Configuration ~~~~~~~~~~~~~~~~~~~~~~~~
 
-# if [[ "$OSTYPE" == darwin* ]]; then
-#   # macos_directories=(
-#   #   "karabiner:$HOME/.config/karabiner"
-#   # )
-#   macos_items=(
-#     "karabiner:$HOME/.config/karabiner"
-#   )
-#   # create_directories "${macos_directories[@]}"
-#   create_symlinks "${macos_items[@]}"
-# fi
+if [[ "$PLATFORM" == "macos" ]]; then
+  echo "Setting up macOS-specific configurations..."
 
-
-if [[ "$OSTYPE" == darwin* ]]; then
-  macos_items=(
-    "karabiner:$HOME/.config/karabiner"
+  macos_directories=(
+    "$XDG_CONFIG_HOME/aerospace"
+    "$XDG_CONFIG_HOME/ghostty"
   )
+
+  macos_items=(
+    "aerospace/aerospace.toml:$XDG_CONFIG_HOME/aerospace/aerospace.toml"
+    "karabiner:$XDG_CONFIG_HOME/karabiner"
+    "ghostty/config.macos:$XDG_CONFIG_HOME/ghostty/config"
+  )
+
+  create_directories "${macos_directories[@]}"
   create_symlinks "${macos_items[@]}"
 fi
 
-# Packages
+# ~~~~~~~~~~~~~~~ Linux Configuration ~~~~~~~~~~~~~~~~~~~~~~~~
 
-# install brew
-# /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+if [[ "$PLATFORM" == "linux" ]]; then
+  echo "Setting up Linux-specific configurations..."
 
-# get the font out of the way first, it's the most annoying
+  linux_directories=(
+    "$XDG_CONFIG_HOME/ghostty"
+  )
 
-# install for Mac using brew.
-# brew install --cask font-iosevka-nerd-font
-# brew install --cask font-ubuntu-mono-nerd-font
+  linux_items=(
+    "ghostty/config.linux:$XDG_CONFIG_HOME/ghostty/config"
+  )
 
-# For ubuntu:
-# mkdir -p $HOME/.local/share/fonts
-# cp $PWD/fonts/UbuntuMono* $HOME/.local/share/fonts
+  create_directories "${linux_directories[@]}"
+  create_symlinks "${linux_items[@]}"
+fi
 
-# brew packages Mac
-# brew install --cask alacritty
-# amethyst fzf nvim exa hugo bash-completion@2 newsboat kubectl starship
+# ~~~~~~~~~~~~~~~ WSL2 Configuration ~~~~~~~~~~~~~~~~~~~~~~~~
 
-# ubuntu packages apt
-# sudo apt install ripgrep gh
+if [[ "$PLATFORM" == "wsl" ]]; then
+  echo "Setting up WSL2-specific configurations..."
 
-# ubuntu apt neovim setup
-# sudo apt install gcc g++ unzip
+  wsl_directories=(
+    "$XDG_CONFIG_HOME/alacritty"
+  )
 
-# ubuntu brew for vim and neovim setup
-# sudo apt install fd fzf kubectl kubectx derailed/k9s/k9s starship
+  wsl_items=(
+    "alacritty/alacritty.toml:$XDG_CONFIG_HOME/alacritty/alacritty.toml"
+  )
 
-# ubuntu brew for neovim setup
-# brew install neovim go lazygit
+  create_directories "${wsl_directories[@]}"
+  create_symlinks "${wsl_items[@]}"
+fi
 
-# ubuntu specific notes
-# create symbolic link to neovim from vim when not using neovim on
-# Ubuntu systems, because I use the v alias everywhere.
-# sudo ln -sf /usr/bin/vim /usr/bin/nvim
-
-# Arch Linux
-
-# pacman packages:
-# sudo pacman -Syu zsh zsh-completions ttf-ubuntu-mono-nerd fzf npm unzip tmux ripgrep fd
-
-# set up prompt
-# mkdir -p "$HOME/.zsh"
-# git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
+echo "Setup complete!"
