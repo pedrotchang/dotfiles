@@ -1,3 +1,8 @@
+[general]
+import = [
+    "~/.config/alacritty/themes/themes/everforest_dark.toml"
+]
+
 [window]
 padding = { x = 10, y = 10 }
 decorations = "Full"
