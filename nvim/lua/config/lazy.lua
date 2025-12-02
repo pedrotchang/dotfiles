@@ -24,7 +24,13 @@ vim.g.maplocalleader = "\\"
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {
-    { "ellisonleao/gruvbox.nvim", config = function() vim.cmd.colorscheme "gruvbox" end },
+    {
+      "sainnhe/everforest",
+      config = function()
+        vim.g.everforest_background = "hard"
+        vim.cmd.colorscheme "everforest"
+      end
+    },
     { import = "config.plugins" },
   },
 })
