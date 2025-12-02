@@ -49,6 +49,25 @@ create_symlinks() {
   done
 }
 
+install_starship() {
+  if command -v starship > /dev/null; then
+    echo "Starship already installed"
+    return
+  fi
+
+  echo "Installing starship..."
+  if [[ "$PLATFORM" == "macos" ]]; then
+    if command -v brew > /dev/null; then
+      brew install starship
+    else
+      echo "Homebrew not found, using curl installer..."
+      curl -sS https://starship.rs/install.sh | sh
+    fi
+  else
+    curl -sS https://starship.rs/install.sh | sh
+  fi
+}
+
 # ~~~~~~~~~~~~~~~ Common Configuration (All Platforms) ~~~~~~~~~~~~~~~~~~~~~~~~
 
 common_directories=(
@@ -67,6 +86,7 @@ common_items=(
 
 echo "Setting up common configurations..."
 create_directories "${common_directories[@]}"
+install_starship
 create_symlinks "${common_items[@]}"
 
 # ~~~~~~~~~~~~~~~ macOS Configuration ~~~~~~~~~~~~~~~~~~~~~~~~
