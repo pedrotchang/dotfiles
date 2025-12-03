@@ -12,7 +12,7 @@ Personal dotfiles repository for macOS, Linux, and WSL2. Configuration files are
 ./setup
 ```
 
-Platform detection: macOS (`darwin`), WSL2 (checks `/proc/version` for "microsoft"), native Linux.
+Platform detection: macOS (`darwin`), WSL2 (checks `/proc/version` for "microsoft"), Omarchy (checks for `~/.local/share/omarchy`), native Linux.
 
 ### Common (all platforms)
 - Neovim → `~/.config/nvim`
@@ -33,6 +33,16 @@ Starship prompt is auto-installed if missing.
 
 ### WSL2 only
 - Alacritty → `alacritty/alacritty.toml`
+
+### Omarchy only
+- Hyprland custom config → `~/.config/hypr/custom.conf` (copied, not symlinked)
+- Adds `source` line to `~/.config/hypr/hyprland.conf`
+
+Custom Hyprland settings:
+- No borders (`border_size = 0`, `gaps_in = 0`, `gaps_out = 0`)
+- Vim-style focus: `Super + HJKL`
+- Vim-style swap: `Super + Shift + HJKL`
+- Vim-style resize: `Super + Alt + HJKL`
 
 ## Architecture
 

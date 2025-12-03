@@ -11,6 +11,8 @@ detect_platform() {
     echo "macos"
   elif [[ -f /proc/version ]] && grep -qi "microsoft\|wsl" /proc/version; then
     echo "wsl"
+  elif [[ -d "$HOME/.local/share/omarchy" ]]; then
+    echo "omarchy"
   elif [[ "$OSTYPE" == linux* ]]; then
     echo "linux"
   else
@@ -152,6 +154,39 @@ if [[ "$PLATFORM" == "wsl" ]]; then
   else
     echo "Warning: Could not detect Windows username"
   fi
+fi
+
+# ~~~~~~~~~~~~~~~ Omarchy Configuration ~~~~~~~~~~~~~~~~~~~~~~~~
+
+if [[ "$PLATFORM" == "omarchy" ]]; then
+  echo "Setting up Omarchy-specific configurations..."
+
+  omarchy_directories=(
+    "$XDG_CONFIG_HOME/hypr"
+  )
+
+  create_directories "${omarchy_directories[@]}"
+
+  # Append custom config to hyprland.conf if not already sourced
+  HYPRLAND_CONF="$XDG_CONFIG_HOME/hypr/hyprland.conf"
+  CUSTOM_SOURCE="source = ~/.config/hypr/custom.conf"
+
+  if [[ -f "$HYPRLAND_CONF" ]]; then
+    if ! grep -q "source.*custom.conf" "$HYPRLAND_CONF"; then
+      echo "" >> "$HYPRLAND_CONF"
+      echo "# Custom dotfiles configuration" >> "$HYPRLAND_CONF"
+      echo "$CUSTOM_SOURCE" >> "$HYPRLAND_CONF"
+      echo "Added custom.conf source to hyprland.conf"
+    else
+      echo "custom.conf already sourced in hyprland.conf"
+    fi
+  else
+    echo "Warning: hyprland.conf not found. Run Omarchy setup first."
+  fi
+
+  # Copy custom config (not symlink, to survive Omarchy updates)
+  cp "$DOTFILES_DIR/hypr/custom.conf" "$XDG_CONFIG_HOME/hypr/custom.conf"
+  echo "Copied custom Hyprland config (no borders, vim keybindings)"
 fi
 
 echo "Setup complete!"
