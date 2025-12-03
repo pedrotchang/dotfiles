@@ -14,18 +14,18 @@ return {
     },
     config = function()
       local capabilities = require('blink.cmp').get_lsp_capabilities()
-      require("lspconfig").lua_ls.setup { capabilities = capabilities }
-      -- require("lspconfig").basedpyright.setup { capabilities = capabilities }
-      require("lspconfig").ruff.setup { capabilities = capabilities }
+
+      vim.lsp.config('lua_ls', { capabilities = capabilities })
+      vim.lsp.config('ruff', { capabilities = capabilities })
+
+      vim.lsp.enable({ 'lua_ls', 'ruff' })
 
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
           local c = vim.lsp.get_client_by_id(args.data.client_id)
           if not c then return end
 
-          -- if vim.bo.filetype == "lua" then
           if c:supports_method('textDocument/formatting') then
-            -- Format the current buffer on save
             vim.api.nvim_create_autocmd('BufWritePre', {
               buffer = args.buf,
               callback = function()

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-Personal dotfiles repository for macOS, Linux, and WSL2. Configuration files are symlinked to their target locations using the `setup` script, which auto-detects the platform.
+Personal dotfiles repository for macOS, Linux, WSL2, and Omarchy. Configuration files are symlinked to their target locations using the `setup` script, which auto-detects the platform.
 
 ## Setup
 
@@ -12,80 +12,64 @@ Personal dotfiles repository for macOS, Linux, and WSL2. Configuration files are
 ./setup
 ```
 
-Platform detection: macOS (`darwin`), WSL2 (checks `/proc/version` for "microsoft"), Omarchy (checks for `~/.local/share/omarchy`), native Linux.
+Platform detection order in `setup`:
+1. macOS (`darwin`)
+2. WSL2 (checks `/proc/version` for "microsoft")
+3. Omarchy (checks for `~/.local/share/omarchy`)
+4. Native Linux
 
-### Common (all platforms)
-- Neovim → `~/.config/nvim`
-- k9s → `~/.config/k9s/skin.yml`
-- eza → `~/.config/eza/eza.yml` (from `eza/theme.yml`)
-- tmux → `~/.tmux.conf`
-- zsh → `~/.zshrc`, `~/.zprofile`
+### Symlink Mappings
 
-Starship prompt is auto-installed if missing.
+**Common (all platforms):**
+- `nvim/` → `~/.config/nvim`
+- `k9s/skin.yml` → `~/.config/k9s/skin.yml`
+- `eza/theme.yml` → `~/.config/eza/eza.yml`
+- `.tmux.conf` → `~/.tmux.conf`
+- `.zshrc`, `.zprofile` → home directory
 
-### macOS only
-- Aerospace → `~/.config/aerospace/aerospace.toml`
-- Karabiner → `~/.config/karabiner`
-- Ghostty → `ghostty/config.macos`
+**macOS:** Aerospace, Karabiner, Ghostty (uses `ghostty/config.macos`)
 
-### Linux only (native)
-- Ghostty → `ghostty/config.linux`
+**Linux:** Ghostty (uses `ghostty/config.linux`)
 
-### WSL2 only
-- Alacritty → `alacritty/alacritty.toml`
+**WSL2:** Links Windows Alacritty config from `%APPDATA%/alacritty/`
 
-### Omarchy only
-- Hyprland custom config → `~/.config/hypr/custom.conf` (copied, not symlinked)
-- Adds `source` line to `~/.config/hypr/hyprland.conf`
-- Replaces Omarchy's nvim with ours (backs up to `nvim.omarchy-backup`)
-
-Custom Hyprland settings:
-- No borders (`border_size = 0`, `gaps_in = 0`, `gaps_out = 0`)
-- Vim-style focus: `Super + HJKL`
-- Vim-style swap: `Super + Shift + HJKL`
-- Vim-style resize: `Super + Alt + HJKL`
+**Omarchy:** Copies `hypr/custom.conf` (not symlinked), backs up Omarchy's nvim to `nvim.omarchy-backup`
 
 ## Architecture
 
-### Neovim Configuration
+### Neovim Configuration (`nvim/`)
 
-- Uses lazy.nvim as plugin manager (bootstrapped in `nvim/lua/config/lazy.lua`)
-- Leader key: `<Space>`, Local leader: `\`
+Entry point: `nvim/init.lua` → loads `config/lazy.lua` and `zettelkasten/zettelkasten.lua`
+
+**Plugin system:**
+- lazy.nvim bootstrapped in `nvim/lua/config/lazy.lua`
+- Plugins in `nvim/lua/config/plugins/*.lua` (auto-imported via `{ import = "config.plugins" }`)
+- Leader: `<Space>`, Local leader: `\`
 - Colorscheme: everforest (hard background)
-- Plugins defined in `nvim/lua/config/plugins/*.lua`
-- Custom zettelkasten module in `nvim/lua/zettelkasten/` for secondbrain note-taking
 
-Key plugins: telescope (with multigrep), harpoon, oil, treesitter, LSP, mini.nvim, gitsigns
+**Custom modules:**
+- `nvim/lua/zettelkasten/zettelkasten.lua` - Creates notes via `sb` CLI tool (note: hardcoded macOS path `/Users/seyza/.asdf/shims/sb`)
+- `nvim/lua/config/telescope/multigrep.lua` - Custom telescope picker
 
-Notable keybindings:
-- `-` opens Oil file browser
-- `<Space><Space>x` sources current file
-- `<Space>x` executes current line as Lua
-- `<Space>to` opens terminal split
-- `<Space>fd` find files, `<Space>fh` help tags, `<Space>en` edit nvim config
-- `<leader>lg` opens lazygit
-- `<leader>sb` creates zettelkasten note from `[[title]]` under cursor
-- `<leader>zo` opens zettelkasten link under cursor
+**Key mappings (defined in init.lua):**
+- `-` Oil file browser
+- `<Space><Space>x` source current file, `<Space>x` execute line as Lua
+- `<Space>to` terminal split, `<Space>te` set command, `<Space>tr` run command
+- `<leader>lg` lazygit
+- `<leader>sb` create zettelkasten note, `<leader>zo` open zettelkasten link
 
 ### Shell Environment
 
-Zsh with vi-mode, starship prompt, fzf integration. Key aliases:
-- `v` → nvim
-- `t` → tmux
-- `g`, `gs`, `gp` → git shortcuts
-- `k` → kubectl
-- `lg` → lazygit
-- `dot` → cd to dotfiles
+The `.zshrc` loads Omarchy-zsh configs when on Omarchy, otherwise is minimal. Shell customizations are platform-specific via the sourced configs.
 
-Uses mise for runtime version management.
+`.zprofile` sets up Homebrew (macOS) and `XDG_CONFIG_HOME`.
 
 ### Tmux
 
-Vi mode for copy, mouse enabled, status bar shows `pomo` timer. Reload config with `prefix + r`.
+Vi mode for copy, mouse enabled, status bar shows `pomo` timer. Reload: `prefix + r`.
 
-### Window Management (macOS)
+### Window Management
 
-Aerospace tiling window manager with vim-style navigation:
-- `alt-hjkl` for focus
-- `alt-shift-hjkl` for moving windows
-- `alt-1..9` for workspaces
+**macOS (Aerospace):** `alt-hjkl` focus, `alt-shift-hjkl` move, `alt-1..9` workspaces
+
+**Omarchy (Hyprland):** `Super+HJKL` focus, `Super+Shift+HJKL` swap, `Super+Alt+HJKL` resize. No borders/gaps.
