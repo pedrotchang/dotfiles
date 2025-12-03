@@ -185,6 +185,10 @@ if [[ "$PLATFORM" == "omarchy" ]]; then
 
   create_directories "${omarchy_directories[@]}"
 
+  # Copy custom config first (must exist before sourcing)
+  cp "$DOTFILES_DIR/hypr/custom.conf" "$XDG_CONFIG_HOME/hypr/custom.conf"
+  echo "Copied custom Hyprland config (no borders, vim keybindings)"
+
   # Append custom config to hyprland.conf if not already sourced
   HYPRLAND_CONF="$XDG_CONFIG_HOME/hypr/hyprland.conf"
   CUSTOM_SOURCE="source = ~/.config/hypr/custom.conf"
@@ -201,10 +205,6 @@ if [[ "$PLATFORM" == "omarchy" ]]; then
   else
     echo "Warning: hyprland.conf not found. Run Omarchy setup first."
   fi
-
-  # Copy custom config (not symlink, to survive Omarchy updates)
-  cp "$DOTFILES_DIR/hypr/custom.conf" "$XDG_CONFIG_HOME/hypr/custom.conf"
-  echo "Copied custom Hyprland config (no borders, vim keybindings)"
 fi
 
 echo "Setup complete!"
