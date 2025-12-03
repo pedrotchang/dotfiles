@@ -37,6 +37,7 @@ Starship prompt is auto-installed if missing.
 ### Omarchy only
 - Hyprland custom config → `~/.config/hypr/custom.conf` (copied, not symlinked)
 - Adds `source` line to `~/.config/hypr/hyprland.conf`
+- Replaces Omarchy's nvim with ours (backs up to `nvim.omarchy-backup`)
 
 Custom Hyprland settings:
 - No borders (`border_size = 0`, `gaps_in = 0`, `gaps_out = 0`)

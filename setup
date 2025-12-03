@@ -70,6 +70,24 @@ install_starship() {
   fi
 }
 
+# ~~~~~~~~~~~~~~~ Omarchy Pre-Setup (replace Omarchy configs with ours) ~~~~~~~~~~~~~~~~~~~~~~~~
+
+if [[ "$PLATFORM" == "omarchy" ]]; then
+  echo "Preparing Omarchy overrides..."
+
+  # Directories to replace with our symlinks
+  omarchy_replace=(
+    "$XDG_CONFIG_HOME/nvim"
+  )
+
+  for dir in "${omarchy_replace[@]}"; do
+    if [ -d "$dir" ] && [ ! -L "$dir" ]; then
+      echo "Backing up Omarchy's $dir to ${dir}.omarchy-backup"
+      mv "$dir" "${dir}.omarchy-backup"
+    fi
+  done
+fi
+
 # ~~~~~~~~~~~~~~~ Common Configuration (All Platforms) ~~~~~~~~~~~~~~~~~~~~~~~~
 
 common_directories=(
