@@ -15,10 +15,22 @@ return {
     config = function()
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-      vim.lsp.config('lua_ls', { capabilities = capabilities })
-      vim.lsp.config('ruff', { capabilities = capabilities })
+      local servers_to_enable = {}
 
-      vim.lsp.enable({ 'lua_ls', 'ruff' })
+      -- Only enable LSP servers if their binaries are available
+      if vim.fn.executable('lua-language-server') == 1 then
+        vim.lsp.config('lua_ls', { capabilities = capabilities })
+        table.insert(servers_to_enable, 'lua_ls')
+      end
+
+      if vim.fn.executable('ruff') == 1 then
+        vim.lsp.config('ruff', { capabilities = capabilities })
+        table.insert(servers_to_enable, 'ruff')
+      end
+
+      if #servers_to_enable > 0 then
+        vim.lsp.enable(servers_to_enable)
+      end
 
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
