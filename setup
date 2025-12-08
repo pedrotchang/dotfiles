@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 set -euo pipefail
 
 if command -v chezmoi >/dev/null; then
@@ -15,4 +14,3 @@ fi
 
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --source $PWD
 exit 0
-
