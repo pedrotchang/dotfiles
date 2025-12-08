@@ -1,0 +1,11 @@
+{{- $platform := "linux" -}}
+{{- if eq .chezmoi.os "darwin" -}}
+{{-   $platform = "macos" -}}
+{{- else if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
+{{-   $platform = "wsl" -}}
+{{- else if (stat (joinPath .chezmoi.homeDir ".local/share/omarchy")) -}}
+{{-   $platform = "omarchy" -}}
+{{- end -}}
+
+[data]
+platform = {{ $platform | quote }}

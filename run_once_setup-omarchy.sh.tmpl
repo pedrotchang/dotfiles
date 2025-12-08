@@ -1,0 +1,25 @@
+#!/bin/bash
+{{ if ne .platform "omarchy" }}
+exit 0
+{{ end }}
+
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+
+# Backup Omarchy's nvim if it exists and is not already backed up
+if [ -d "$XDG_CONFIG_HOME/nvim" ] && [ ! -L "$XDG_CONFIG_HOME/nvim" ] && [ ! -d "$XDG_CONFIG_HOME/nvim.omarchy-backup" ]; then
+  echo "Backing up Omarchy's nvim to nvim.omarchy-backup"
+  mv "$XDG_CONFIG_HOME/nvim" "$XDG_CONFIG_HOME/nvim.omarchy-backup"
+fi
+
+# Append custom.conf source to hyprland.conf if not already present
+HYPRLAND_CONF="$XDG_CONFIG_HOME/hypr/hyprland.conf"
+CUSTOM_SOURCE="source = ~/.config/hypr/custom.conf"
+
+if [ -f "$HYPRLAND_CONF" ]; then
+  if ! grep -q "source.*custom.conf" "$HYPRLAND_CONF"; then
+    echo "" >> "$HYPRLAND_CONF"
+    echo "# Custom dotfiles configuration" >> "$HYPRLAND_CONF"
+    echo "$CUSTOM_SOURCE" >> "$HYPRLAND_CONF"
+    echo "Added custom.conf source to hyprland.conf"
+  fi
+fi

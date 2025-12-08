@@ -1,0 +1,10 @@
+{{ if ne .platform "macos" }}
+.config/aerospace
+.config/aerospace/**
+{{ end }}
+{{ if ne .platform "omarchy" }}
+.config/hypr
+.config/hypr/**
+.config/waybar
+.config/waybar/**
+{{ end }}

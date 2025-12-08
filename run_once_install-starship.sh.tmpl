@@ -1,0 +1,13 @@
+#!/bin/bash
+if ! command -v starship &> /dev/null; then
+  echo "Installing starship..."
+{{ if eq .platform "macos" }}
+  if command -v brew &> /dev/null; then
+    brew install starship
+  else
+    curl -sS https://starship.rs/install.sh | sh
+  fi
+{{ else }}
+  curl -sS https://starship.rs/install.sh | sh
+{{ end }}
+fi
