@@ -16,10 +16,13 @@ HISTFILE="$HOME/.zsh_history"
 HISTSIZE=80000
 SAVEHIST=50000
 
+{{- if eq .chezmoi.os "darwin" }}
+
 # Add Homebrew zsh completions
 if type brew &>/dev/null; then
   FPATH=/opt/homebrew/share/zsh/site-functions:$FPATH
 fi
+{{- end }}
 
 # enable zsh completion
 autoload -Uz compinit && compinit
@@ -186,8 +189,9 @@ fi
 
 alias awsq="aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId,PublicIpAddress,State.Name,KeyName]' --output table"
 
-alias mvcv="cp /Users/seyza/Repos/github.com/pedrotchang/maincv/rendercv_output/pedro_tae_young_chang_cv.pdf /Users/seyza/Repos/github.com/pedrotchang/blog/static"
+{{- if eq .chezmoi.os "darwin" }}
 
+alias mvcv="cp /Users/seyza/Repos/github.com/pedrotchang/maincv/rendercv_output/pedro_tae_young_chang_cv.pdf /Users/seyza/Repos/github.com/pedrotchang/blog/static"
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/seyza/.rd/bin:$PATH"
@@ -197,4 +201,6 @@ fpath=(/Users/seyza/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
 # End of Docker CLI completions
+{{- end }}
+
 export PATH="$HOME/.local/bin:$PATH"
