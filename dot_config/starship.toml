@@ -60,3 +60,7 @@ style = "bold red"
 
 [username]
 show_always = false
+
+[env_var.DEVPOD_WORKSPACE_ID]
+format = '[📦 $env_value]($style) '
+style = "bold yellow"
