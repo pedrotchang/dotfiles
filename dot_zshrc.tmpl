@@ -8,7 +8,6 @@ export LAB="$GHREPOS/lab"
 export SCRIPTS="$DOTFILES/scripts"
 export SECONDBRAIN="$HOME/secondbrain"
 
-export GITHUB_TOKEN=$(pass github/mise-token)
 
 export GOBIN="$HOME/.local/bin"
 export GOPATH="$HOME/go/"
@@ -18,6 +17,11 @@ export GOPATH="$HOME/go/"
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=80000
 SAVEHIST=50000
+
+# ~/.zshrc
+if command -v pass &> /dev/null; then
+  export GITHUB_TOKEN=$(pass github/token)
+fi
 
 {{- if eq .chezmoi.os "darwin" }}
 
