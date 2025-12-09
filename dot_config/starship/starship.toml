@@ -1,0 +1,62 @@
+format = """
+$directory\
+$git_branch\
+$git_status\
+$kubernetes\
+$docker_context\
+$python\
+$golang\
+$cmd_duration\
+$line_break\
+$character"""
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+
+[directory]
+truncation_length = 4
+truncate_to_repo = true
+style = "bold cyan"
+
+[git_branch]
+symbol = " "
+format = "[$symbol$branch]($style) "
+style = "bold purple"
+
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style) )'
+
+[kubernetes]
+disabled = false
+format = '[⎈ $context(\($namespace\))]($style) '
+style = "bold blue"
+# Only show in dirs with k8s files (optional, remove if you want it always)
+# detect_files = ['k8s', 'kubernetes', 'talos']
+
+[docker_context]
+disabled = false
+symbol = " "
+only_with_files = false  # show even without docker-compose.yml
+
+[cmd_duration]
+min_time = 2000
+format = "took [$duration]($style) "
+style = "bold yellow"
+
+[python]
+symbol = " "
+detect_extensions = ["py"]
+detect_files = ["requirements.txt", "pyproject.toml", "Pipfile"]
+
+[golang]
+symbol = " "
+# useful if you work with talos/k8s tooling
+
+[hostname]
+ssh_only = true
+format = "[@$hostname]($style) "
+style = "bold red"
+
+[username]
+show_always = false
