@@ -11,6 +11,8 @@ export SECONDBRAIN="$HOME/secondbrain"
 export GOBIN="$HOME/.local/bin"
 export GOPATH="$HOME/go/"
 
+[[ -f ~/.secrets ]] && source ~/.secrets
+
 # enable zsh history
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=80000
