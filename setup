@@ -2,6 +2,9 @@
 
 set -euo pipefail
 
+if command -v gh >/dev/null && gh auth status &>/dev/null; then
+    export GITHUB_TOKEN=$(gh auth token)
+fi
 
 if command -v zsh >/dev/null; then
     sudo chsh -s $(command -v zsh) $USER
