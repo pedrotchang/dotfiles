@@ -202,6 +202,9 @@ if command -v devpod &> /dev/null; then
     alias devtach='devpod up . --devcontainer-path .devcontainer/tachtit/devcontainer.json --id tachtit --workspace-env GITHUB_TOKEN=$(pass github/mise-token)'
 fi
 
+if command -v omnictl &> /dev/null; then
+    alias omniauth='omnictl kubeconfig --service-account -c $CLUSTER_NAME --user pedrotychang /homelab/$CLUSTER_NAME-kubeconfig.yaml'
+fi
 
 alias awsq="aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId,PublicIpAddress,State.Name,KeyName]' --output table"
 
