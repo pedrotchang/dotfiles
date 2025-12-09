@@ -20,7 +20,7 @@ SAVEHIST=50000
 
 # ~/.zshrc
 if command -v pass &> /dev/null; then
-  export GITHUB_TOKEN=$(pass github/token)
+  export GITHUB_TOKEN=$(pass github/mise-token)
 fi
 
 {{- if eq .chezmoi.os "darwin" }}
