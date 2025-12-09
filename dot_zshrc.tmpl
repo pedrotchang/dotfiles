@@ -7,11 +7,12 @@ export DOTFILES="$GHREPOS/dotfiles"
 export LAB="$GHREPOS/lab"
 export SCRIPTS="$DOTFILES/scripts"
 export SECONDBRAIN="$HOME/secondbrain"
+export GITHUB_TOKEN=$(gh auth token)
+
 
 export GOBIN="$HOME/.local/bin"
 export GOPATH="$HOME/go/"
 
-[[ -f ~/.secrets ]] && source ~/.secrets
 
 # enable zsh history
 HISTFILE="$HOME/.zsh_history"
