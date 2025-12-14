@@ -14,6 +14,12 @@ export SECONDBRAIN="$HOME/secondbrain"
 export GOBIN="$HOME/.local/bin"
 export GOPATH="$HOME/go/"
 
+if [[ "$(hostname)" == "seyzaomarchy" ]]; then
+  export MISE_NODE_VERSION=25.2.1
+  export MISE_NPM_VERSION=11.7.0
+elif mise which node &>/dev/null; then
+  export MISE_NPM_VERSION=11.7.0
+fi
 
 # enable zsh history
 HISTFILE="$HOME/.zsh_history"
