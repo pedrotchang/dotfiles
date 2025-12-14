@@ -1,3 +1,5 @@
+autoload -Uz compinit
+compinit
 # ~~~~~~~~~~~~~~~ Environment Variables ~~~~~~~~~~~~~~~~~~~~~~~~
 # Directories
 export REPOS="$HOME/Repos"
@@ -31,8 +33,7 @@ if type brew &>/dev/null; then
 fi
 {{- end }}
 
-# enable zsh completion
-autoload -Uz compinit && compinit
+source <(kubectl completion zsh)
 
 # Enhance pass completion for nested paths
 zstyle ':completion:*:*:pass:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
