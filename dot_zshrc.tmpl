@@ -215,6 +215,12 @@ fi
 
 alias awsq="aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId,PublicIpAddress,State.Name,KeyName]' --output table"
 
+if [[ -f /etc/arch-release ]]; then
+    alias up-pacl='pacman -Qqen > ~/.local/share/chezmoi/dot_config/pacman/pkglist.txt'
+    alias up-pacy='pacman -Qqem > ~/.local/share/chezmoi/dot_config/pacman/aurlist.txt'
+    alias up-pac='up-pacl && up-pacy && echo "Package lists updated"'
+fi
+
 {{- if eq .chezmoi.os "darwin" }}
 
 [[ -d /homelab ]] && cd /homelab
