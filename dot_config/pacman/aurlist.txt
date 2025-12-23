@@ -1,0 +1,5 @@
+aws-sam-cli-bin
+claude-desktop
+electron25-bin
+obsidian-bin
+slack-desktop

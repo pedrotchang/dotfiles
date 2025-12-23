@@ -1,0 +1,22 @@
+{{ if eq .chezmoi.osRelease.id "arch" -}}
+#!/bin/bash
+
+set -euo pipefail
+
+PKGLIST="{{ .chezmoi.sourceDir }}/dot_config/pacman/pkglist.txt"
+AURLIST="{{ .chezmoi.sourceDir }}/dot_config/pacman/aurlist.txt"
+
+# Install official repo packages
+if [ -f "$PKGLIST" ]; then
+    echo "Installing Arch packages..."
+    sudo pacman -S --needed $(cat "$PKGLIST")
+fi
+
+# Install AUR packages with yay
+if [ -f "$AURLIST" ] && command -v yay >/dev/null; then
+    echo "Installing AUR packages..."
+    yay -S --needed $(cat "$AURLIST")
+elif [ -f "$AURLIST" ]; then
+    echo "yay not found, skipping AUR packages"
+fi
+{{ end -}}
