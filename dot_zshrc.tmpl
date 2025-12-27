@@ -31,6 +31,8 @@ if command -v pass &> /dev/null; then
   export GITHUB_TOKEN=$(pass github/mise-token)
 fi
 
+alias tms="$GHREPOS/local-scripts/tmux-layout.sh"
+
 {{- if eq .chezmoi.os "darwin" }}
 
 # Add Homebrew zsh completions
@@ -225,7 +227,6 @@ fi
 
 [[ -d /homelab ]] && cd /homelab
 
-alias tms="$GHREPOS/local-scripts/tmux-layout.sh"
 
 alias mvcv="cp /Users/seyza/Repos/github.com/pedrotchang/maincv/rendercv_output/pedro_tae_young_chang_cv.pdf /Users/seyza/Repos/github.com/pedrotchang/blog/static"
 
