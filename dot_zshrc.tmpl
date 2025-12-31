@@ -26,11 +26,6 @@ HISTFILE="$HOME/.zsh_history"
 HISTSIZE=80000
 SAVEHIST=50000
 
-# ~/.zshrc
-if command -v pass &> /dev/null; then
-  export GITHUB_TOKEN=$(pass github/mise-token)
-fi
-
 alias tms="$GHREPOS/local-scripts/tmux-layout.sh"
 alias tmd="$GHREPOS/local-scripts/devpod-tmux.sh"
 
@@ -204,12 +199,17 @@ if [[ -d .zsh/zsh-syntax-highlighting ]] ; then
   source .zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
-if command -v devpod &> /dev/null; then
-    alias devdata='devpod up . --devcontainer-path .devcontainer/data/devcontainer.json --id data --workspace-env GITHUB_TOKEN=$(pass github/mise-token)'
+if [[ "$(uname)" != "Darwin" ]] && ! grep -q 'ID=arch' /etc/os-release 2>/dev/null; then
+  if command -v pass &> /dev/null; then
+    export GITHUB_TOKEN=$(pass github/mise-token)
+  fi
 fi
 
-if command -v devpod &> /dev/null; then
+if [[ "$(uname)" == "Darwin" ]] || grep -q 'ID=arch' /etc/os-release 2>/dev/null; then
+  if command -v devpod &> /dev/null; then
+    alias devdata='devpod up . --devcontainer-path .devcontainer/data/devcontainer.json --id data --workspace-env GITHUB_TOKEN=$(pass github/mise-token)'
     alias devtach='devpod up . --devcontainer-path .devcontainer/tachtit/devcontainer.json --id tachtit --workspace-env GITHUB_TOKEN=$(pass github/mise-token)'
+  fi
 fi
 
 if command -v omnictl &> /dev/null; then
