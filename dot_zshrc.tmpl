@@ -69,7 +69,3 @@ fi
 export PATH="/Users/seyza/.rd/bin:$PATH"
 {{- end }}
 
-# GitHub token (Linux, non-Arch only)
-if [[ "$(uname)" != "Darwin" ]] && ! grep -q 'ID=arch' /etc/os-release 2>/dev/null; then
-  command -v pass &>/dev/null && export GITHUB_TOKEN=$(pass github/mise-token)
-fi
