@@ -1,0 +1,23 @@
+{{- $remote := or (env "CODESPACES" | not | not) (env "SSH_CONNECTION" | not | not) (env "KUBERNETES_SERVICE_HOST" | not | not) (env "container" | not | not) (env "REMOTE_CONTAINERS" | not | not) (stat "/.dockerenv" | not | not) -}}
+
+[tools]
+# Core (always)
+fzf = "0.62.0"
+jq = "latest"
+lazygit = "latest"
+neovim = "0.11.5"
+omnictl = "latest"
+ripgrep = "14.1.1"
+starship = "1.24.1"
+
+{{- if not $remote }}
+# Local only
+bat = "latest"
+btop = "1.4.4"
+chezmoi = "latest"
+fd = "10.2.0"
+github-cli = "2.82.1"
+lsd = "latest"
+python = "3.14"
+uv = "0.9.17"
+{{- end }}
