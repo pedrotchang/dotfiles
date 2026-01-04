@@ -1,32 +1,63 @@
 {{- $remote := or (env "CODESPACES" | not | not) (env "SSH_CONNECTION" | not | not) (env "KUBERNETES_SERVICE_HOST" | not | not) (env "container" | not | not) (env "REMOTE_CONTAINERS" | not | not) (stat "/.dockerenv" | not | not) -}}
 
+# ~~~~~~~~~~~~~~~ Environment Variables ~~~~~~~~~~~~~~~~~~~~~~~~
+
+export REPOS="$HOME/Repos"
+export GITUSER="pedrotchang"
+export GHREPOS="$REPOS/github.com/$GITUSER"
+export DOTFILES="$GHREPOS/dotfiles"
+export LAB="$GHREPOS/lab"
+export SCRIPTS="$DOTFILES/scripts"
+export SECONDBRAIN="$HOME/secondbrain"
+
+export GOBIN="$HOME/.local/bin"
+export GOPATH="$HOME/go/"
+
+export PATH="$HOME/.local/bin:$PATH"
+
+# ~~~~~~~~~~~~~~~ History ~~~~~~~~~~~~~~~~~~~~~~~~
+
+HISTFILE="$HOME/.bash_history"
+HISTSIZE=80000
+HISTFILESIZE=50000
+
+# ~~~~~~~~~~~~~~~ Shell Options ~~~~~~~~~~~~~~~~~~~~~~~~
+
 set -o vi
+shopt -s extglob nullglob
 
-# edit PATH
-if [[ -d $HOME/.local/bin ]]; then
-  export PATH=$HOME/.local/bin:$PATH
-fi
+# ~~~~~~~~~~~~~~~ Completions ~~~~~~~~~~~~~~~~~~~~~~~~
 
+[[ -r /usr/share/bash-completion/bash_completion ]] && source /usr/share/bash-completion/bash_completion
 
-if command -v mise >/dev/null; then
-  eval "$(mise activate bash)"
-fi
+command -v kubectl &>/dev/null && source <(kubectl completion bash)
+command -v flux &>/dev/null && source <(flux completion bash)
 
-# (neo)vim
-if command -v nvim > /dev/null ; then
+# ~~~~~~~~~~~~~~~ Tool Initialization ~~~~~~~~~~~~~~~~~~~~~~~~
+
+command -v mise &>/dev/null && eval "$(mise activate bash)"
+command -v starship &>/dev/null && eval "$(starship init bash)"
+command -v fzf &>/dev/null && eval "$(fzf --bash)"
+
+# ~~~~~~~~~~~~~~~ Editor ~~~~~~~~~~~~~~~~~~~~~~~~
+
+if command -v nvim &>/dev/null; then
   export EDITOR="nvim"
   export VISUAL="nvim"
-elif command -v vim > /dev/null ; then
-  export EDITOR="vim"
-  export VISUAL="vim"
 fi
 
-# enable the starship prompt
-if command -v starship >/dev/null; then
-  eval "$(starship init bash)"
-fi
+# ~~~~~~~~~~~~~~~ Aliases ~~~~~~~~~~~~~~~~~~~~~~~~
 
-# use bat instead of cat
-if command -v bat >/dev/null; then
-  alias cat="bat"
+[[ -f ~/.config/terminal/aliases ]] && source ~/.config/terminal/aliases
+
+# ~~~~~~~~~~~~~~~ Platform Specific ~~~~~~~~~~~~~~~~~~~~~~~~
+
+{{- if eq .chezmoi.os "darwin" }}
+[[ -d /homelab ]] && cd /homelab
+export PATH="/Users/seyza/.rd/bin:$PATH"
+{{- end }}
+
+# GitHub token (Linux, non-Arch only)
+if [[ "$(uname)" != "Darwin" ]] && ! grep -q 'ID=arch' /etc/os-release 2>/dev/null; then
+  command -v pass &>/dev/null && export GITHUB_TOKEN=$(pass github/mise-token)
 fi
