@@ -2,18 +2,23 @@
 
 # ~~~~~~~~~~~~~~~ Environment Variables ~~~~~~~~~~~~~~~~~~~~~~~~
 
+# Repos
 export REPOS="$HOME/Repos"
 export GITUSER="pedrotchang"
 export GHREPOS="$REPOS/github.com/$GITUSER"
 export DOTFILES="$GHREPOS/dotfiles"
 export LAB="$GHREPOS/lab"
-export SCRIPTS="$DOTFILES/scripts"
 export SECONDBRAIN="$HOME/secondbrain"
 
+# Go
+export GOPATH="$HOME/go"
 export GOBIN="$HOME/.local/bin"
-export GOPATH="$HOME/go/"
 
-export PATH="$HOME/.local/bin:$PATH"
+# Ruby (user-installed gems)
+export GEM_HOME="$HOME/.local/share/gem"
+export GEM_BIN="$GEM_HOME/ruby/3.4.0/bin"
+
+export PATH="$HOME/.claude/cli-tools:$GOBIN:$GEM_BIN:$PATH"
 
 # ~~~~~~~~~~~~~~~ History ~~~~~~~~~~~~~~~~~~~~~~~~
 
