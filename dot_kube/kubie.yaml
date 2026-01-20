@@ -1,0 +1,8 @@
+configs:
+  include:
+    - /home/seyza/Repos/github.com/pedrotchang/homelab/*-kubeconfig.yaml
+
+prompt:
+  disable: false
+  show_depth: true
+  zsh_use_rps1: false
