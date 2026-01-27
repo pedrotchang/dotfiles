@@ -96,3 +96,13 @@ alias mvcv="cp /Users/seyza/Repos/github.com/pedrotchang/maincv/rendercv_output/
 # ~~~~~~~~~~~~~~~ FZF ~~~~~~~~~~~~~~~~~~~~~~~~
 
 alias hb="history | fzf"
+
+# ~~~~~~~~~~~~~~~ Pass OTP ~~~~~~~~~~~~~~~~~~~~~~~~
+
+otp-add() {
+  read -rp "QR image path: " img
+  [[ ! -f "$img" ]] && echo "File not found: $img" && return 1
+  read -rp "Account name: " account
+  [[ -z "$account" ]] && echo "Account name required" && return 1
+  zbarimg -q --raw "$img" | pass otp append "$account" && rm -v "$img"
+}
