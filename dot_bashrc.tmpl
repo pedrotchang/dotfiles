@@ -34,7 +34,11 @@ shopt -s extglob nullglob
 
 # ~~~~~~~~~~~~~~~ Completions ~~~~~~~~~~~~~~~~~~~~~~~~
 
+{{- if eq .chezmoi.os "darwin" }}
+[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && source "/opt/homebrew/etc/profile.d/bash_completion.sh"
+{{- else }}
 [[ -r /usr/share/bash-completion/bash_completion ]] && source /usr/share/bash-completion/bash_completion
+{{- end }}
 
 command -v kubectl &>/dev/null && source <(kubectl completion bash)
 command -v flux &>/dev/null && source <(flux completion bash)
