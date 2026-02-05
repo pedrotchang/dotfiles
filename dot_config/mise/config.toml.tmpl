@@ -1,24 +1,40 @@
 {{- $remote := or (env "CODESPACES" | not | not) (env "SSH_CONNECTION" | not | not) (env "KUBERNETES_SERVICE_HOST" | not | not) (env "container" | not | not) (env "REMOTE_CONTAINERS" | not | not) (stat "/.dockerenv" | not | not) -}}
 
 [tools]
-# Core (always)
-fzf = "0.62.0"
+# Shell essentials (always available)
+fzf = "latest"
+ripgrep = "latest"
+fd = "latest"
+bat = "latest"
 jq = "latest"
+eza = "latest"
+
+# Editor & dev tools
+neovim = "latest"
 lazygit = "latest"
-neovim = "0.11.5"
-omnictl = "latest"
-ripgrep = "14.1.1"
-starship = "1.24.1"
-bun = "1.3.5"
+starship = "latest"
+
+# Utilities
+dust = "latest"
+gum = "latest"
+tmux = "latest"
+
+# Runtime
+bun = "latest"
 
 {{- if not $remote }}
-# Local only
-bat = "latest"
-btop = "1.4.4"
+# Local only (not needed in containers/codespaces)
 chezmoi = "latest"
-fd = "10.2.0"
-github-cli = "2.82.1"
-lsd = "latest"
-python = "3.14"
-uv = "0.9.17"
+github-cli = "latest"
+
+# Cloud CLIs
+awscli = "latest"
+azure-cli = "latest"
+
+# Python tooling
+python = "3.13"
+uv = "latest"
+
+# Kubernetes core (needed everywhere locally)
+omnictl = "latest"
 {{- end }}

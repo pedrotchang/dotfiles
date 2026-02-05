@@ -2,8 +2,8 @@
 
 set -euo pipefail
 
-if command -v zsh >/dev/null; then
-    sudo chsh -s $(command -v zsh) $USER
+if command -v bash >/dev/null; then
+    sudo chsh -s $(command -v bash) $USER
 fi
 
 if command -v chezmoi >/dev/null; then

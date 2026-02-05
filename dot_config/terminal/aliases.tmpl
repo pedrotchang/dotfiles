@@ -92,7 +92,7 @@ fi
 # ~~~~~~~~~~~~~~~ macOS ~~~~~~~~~~~~~~~~~~~~~~~~
 
 {{- if eq .chezmoi.os "darwin" }}
-alias mvcv="cp /Users/seyza/Repos/github.com/pedrotchang/maincv/rendercv_output/pedro_tae_young_chang_cv.pdf /Users/seyza/Repos/github.com/pedrotchang/blog/static"
+alias mvcv="cp $GHREPOS/maincv/rendercv_output/pedro_tae_young_chang_cv.pdf $GHREPOS/blog/static"
 {{- end }}
 
 # ~~~~~~~~~~~~~~~ FZF ~~~~~~~~~~~~~~~~~~~~~~~~

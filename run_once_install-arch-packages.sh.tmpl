@@ -1,4 +1,4 @@
-{{ if eq .chezmoi.osRelease.id "arch" -}}
+{{ if and (hasKey .chezmoi.osRelease "id") (eq .chezmoi.osRelease.id "arch") -}}
 #!/bin/bash
 
 set -euo pipefail
