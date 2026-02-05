@@ -37,7 +37,7 @@ autoload -Uz compinit && compinit
 zstyle ':completion:*:*:pass:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' menu select
 
-source <(kubectl completion zsh)
+command -v kubectl &>/dev/null && source <(kubectl completion zsh)
 command -v flux &>/dev/null && source <(flux completion zsh)
 
 # ~~~~~~~~~~~~~~~ Tool Initialization ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -66,6 +66,6 @@ fi
 
 {{- if eq .chezmoi.os "darwin" }}
 [[ -d /homelab ]] && cd /homelab
-export PATH="/Users/seyza/.rd/bin:$PATH"
+export PATH="$HOME/.rd/bin:$PATH"
 {{- end }}
 

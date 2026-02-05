@@ -1,1 +1,14 @@
 setup
+
+# macOS-only configs (ignore on Linux)
+{{ if ne .chezmoi.os "darwin" }}
+.config/aerospace/
+.zprofile
+{{ end }}
+
+# Linux-only configs (ignore on macOS)
+{{ if ne .chezmoi.os "linux" }}
+.config/hypr/
+.config/waybar/
+.config/pacman/
+{{ end }}
