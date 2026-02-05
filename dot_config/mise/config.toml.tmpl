@@ -18,8 +18,10 @@ starship = "latest"
 dust = "latest"
 gum = "latest"
 tmux = "latest"
-btop = "latest"
 lsd = "latest"
+{{- if eq .chezmoi.os "linux" }}
+btop = "latest"
+{{- end }}
 
 # Runtime
 bun = "latest"
