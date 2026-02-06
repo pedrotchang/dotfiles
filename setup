@@ -2,20 +2,54 @@
 
 set -euo pipefail
 
+# ~~~~~~~~~~~~~~~ Xcode Command Line Tools ~~~~~~~~~~~~~~~~~~~~~~~~
+
+if ! xcode-select -p &>/dev/null; then
+  echo "Installing Xcode Command Line Tools..."
+  xcode-select --install
+  echo "Waiting for Xcode CLT installation to complete..."
+  until xcode-select -p &>/dev/null; do
+    sleep 5
+  done
+fi
+
+# ~~~~~~~~~~~~~~~ Homebrew (macOS only) ~~~~~~~~~~~~~~~~~~~~~~~~
+
+if [[ "$(uname)" == "Darwin" ]] && ! command -v brew &>/dev/null; then
+  echo "Installing Homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# ~~~~~~~~~~~~~~~ Shell ~~~~~~~~~~~~~~~~~~~~~~~~
+
 if command -v bash >/dev/null; then
-    sudo chsh -s $(command -v bash) $USER
+  sudo chsh -s "$(command -v bash)" "$USER"
 fi
 
-if command -v chezmoi >/dev/null; then
-  chezmoi init --apply --source $PWD
+# ~~~~~~~~~~~~~~~ Zsh Plugins ~~~~~~~~~~~~~~~~~~~~~~~~
+
+ZSH_PLUGIN_DIR="$HOME/.zsh"
+if [[ ! -d "$ZSH_PLUGIN_DIR/zsh-autosuggestions" ]]; then
+  echo "Installing zsh-autosuggestions..."
+  git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_PLUGIN_DIR/zsh-autosuggestions"
+fi
+if [[ ! -d "$ZSH_PLUGIN_DIR/zsh-syntax-highlighting" ]]; then
+  echo "Installing zsh-syntax-highlighting..."
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting "$ZSH_PLUGIN_DIR/zsh-syntax-highlighting"
+fi
+
+# ~~~~~~~~~~~~~~~ Chezmoi ~~~~~~~~~~~~~~~~~~~~~~~~
+
+if command -v chezmoi &>/dev/null; then
+  chezmoi init --apply --source "$PWD"
   exit 0
 fi
 
-if command -v mise >/dev/null; then
-  mise exec chezmoi -- chezmoi init --apply --source $PWD
+if command -v mise &>/dev/null; then
+  mise exec chezmoi -- chezmoi init --apply --source "$PWD"
   exit 0
 fi
 
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --source $PWD
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --source "$PWD"
 exit 0
-
