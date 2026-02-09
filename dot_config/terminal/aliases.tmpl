@@ -96,6 +96,10 @@ fi
 alias mvcv="cp $GHREPOS/maincv/rendercv_output/pedro_tae_young_chang_cv.pdf $GHREPOS/blog/static"
 {{- end }}
 
+# ~~~~~~~~~~~~~~~ PAI / Claude ~~~~~~~~~~~~~~~~~~~~~~~~
+
+alias lux-sync='git -C ~/.claude pull && git -C ~/.claude config core.hooksPath .githooks'
+
 # ~~~~~~~~~~~~~~~ FZF ~~~~~~~~~~~~~~~~~~~~~~~~
 
 alias hb="history | fzf"
