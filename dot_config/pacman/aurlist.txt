@@ -1,5 +1,5 @@
 aws-sam-cli-bin
-claude-desktop
 electron25-bin
+git-credential-oauth
 obsidian-bin
 slack-desktop
